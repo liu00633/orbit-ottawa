@@ -20,41 +20,32 @@ navSearch.addEventListener("click", (e) => {
   navSearch.classList.toggle("open");
 });
 
-const scrollRevealOption = {
-  distance: "50px",
-  origin: "bottom",
-  duration: 1000,
-};
+// NASA API Integration
+const NASA_API_KEY = "pDBwXti4KC1asWMaH5HnoUXxoyvfYEUE7I5W1XOj"; // Replace with your actual API key
+const NASA_API_URL = `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`;
 
+fetch(NASA_API_URL)
+  .then((response) => response.json())
+  .then((data) => {
+    const nasaImage = document.getElementById("nasa-image");
+    const nasaCaption = document.getElementById("nasa-caption");
+
+    nasaImage.src = data.url;
+    nasaImage.alt = data.title;
+    nasaCaption.textContent = data.explanation;
+  })
+  .catch((error) => {
+    console.error("Error fetching NASA image:", error);
+  });
+
+// ScrollReveal and Swiper initializations
 ScrollReveal().reveal(".header__image img", {
-  ...scrollRevealOption,
+  distance: "50px",
   origin: "right",
+  duration: 1000,
 });
 ScrollReveal().reveal(".header__content div", {
   duration: 1000,
-  delay: 500,
-});
-ScrollReveal().reveal(".header__content h1", {
-  ...scrollRevealOption,
-  delay: 1000,
-});
-ScrollReveal().reveal(".header__content p", {
-  ...scrollRevealOption,
-  delay: 1500,
-});
-
-ScrollReveal().reveal(".deals__card", {
-  ...scrollRevealOption,
-  interval: 500,
-});
-
-ScrollReveal().reveal(".about__image img", {
-  ...scrollRevealOption,
-  origin: "right",
-});
-ScrollReveal().reveal(".about__card", {
-  duration: 1000,
-  interval: 500,
   delay: 500,
 });
 
