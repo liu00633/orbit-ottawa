@@ -30,13 +30,21 @@ fetch(NASA_API_URL)
     const nasaImage = document.getElementById("nasa-image");
     const nasaCaption = document.getElementById("nasa-caption");
 
-    nasaImage.src = data.url;
-    nasaImage.alt = data.title;
-    nasaCaption.textContent = data.explanation;
+    if (data.media_type === "image") {
+      nasaImage.src = data.url;
+      nasaImage.alt = data.title;
+    } else {
+      nasaImage.src = "assets/landing-image.png"; // Replace with a local fallback image
+      
+    }
+
+    nasaCaption.textContent = data.explanation || "No description available.";
   })
   .catch((error) => {
     console.error("Error fetching NASA image:", error);
+    document.getElementById("nasa-caption").textContent = "Failed to load NASA Image.";
   });
+
 
 // ScrollReveal and Swiper initializations
 ScrollReveal().reveal(".header__image img", {
